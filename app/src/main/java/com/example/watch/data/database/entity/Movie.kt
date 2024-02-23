@@ -1,4 +1,4 @@
-package com.example.watch.data.entity
+package com.example.watch.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Movie(
     @PrimaryKey
     val imdbID: String,
-    val title: String,
-    val year: Int,
-    val posterUrl: String
+    val Title: String,
+    val Year: String,
+    val Poster: String
 )
