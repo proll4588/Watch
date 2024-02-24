@@ -19,7 +19,7 @@ interface MovieApi {
     @GET("/")
     fun movieList(
         @Query("s") title: String,
-        @Query("y") year: Int?,
+        @Query("y") year: String?,
         @Query("apikey") key: String? = "431f9cfd",
     ): Call<SearchMovieResponse>
 }
