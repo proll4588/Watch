@@ -20,11 +20,8 @@ abstract class MovieDatabase : RoomDatabase() {
             }
         }
 
-        // Create and pre-populate the database. See this article for more details:
-        // https://medium.com/google-developers/7-pro-tips-for-room-fbadea4bfbd1#4785
         private fun buildDatabase(context: Context): MovieDatabase {
             return Room.databaseBuilder(context, MovieDatabase::class.java, "Movie-db").build()
         }
     }
-
 }
