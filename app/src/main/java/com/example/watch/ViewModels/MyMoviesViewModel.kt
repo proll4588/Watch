@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.watch.data.database.entity.Movie
 import com.example.watch.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class MyMoviesViewModel @Inject constructor(
     val movies = movieRepository.allMovies
 
     fun removeMovie(movie: Movie) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             movieRepository.delete(movie)
         }
     }

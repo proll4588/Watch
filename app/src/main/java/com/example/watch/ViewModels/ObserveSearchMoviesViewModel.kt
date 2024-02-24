@@ -1,5 +1,6 @@
 package com.example.watch.ViewModels
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.watch.data.api.movieService.MovieFromApi
 import com.example.watch.data.api.movieService.MovieService
 import com.example.watch.libs.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,10 +20,11 @@ class ObserveSearchMoviesViewModel @Inject constructor(
     var searchMovies: MutableState<List<MovieFromApi>?> = mutableStateOf(listOf())
         private set
 
-    fun searchMovies(title: String, year: Int?) {
-        viewModelScope.launch(coroutineExceptionHandler) {
+    fun searchMovies(title: String, year: String?) {
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             val found = movieService.searchMovies(title, year)
             searchMovies.value = found
+            Log.d("found", found.toString())
         }
     }
 }
