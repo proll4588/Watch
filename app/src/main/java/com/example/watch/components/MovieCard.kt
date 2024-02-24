@@ -1,6 +1,7 @@
 package com.example.watch.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,32 +22,39 @@ import coil.compose.AsyncImage
 import com.example.watch.data.database.entity.Movie
 
 @Composable
-fun MovieCard(movie: Movie, onClick: () -> Unit, content: @Composable (() -> Unit) = {}) {
+fun MovieCard(
+    modifier: Modifier = Modifier,
+    movie: Movie,
+    onClick: () -> Unit,
+    content: @Composable (() -> Unit) = {},
+) {
     MovieCard(
         onClick = onClick,
         year = movie.Year,
         title = movie.Title,
         imgUrl = movie.Poster,
-        content = content
-
+        content = content,
+        modifier = modifier
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MovieCard(
+    modifier: Modifier = Modifier,
     imgUrl: String,
     title: String,
     year: String,
     content: @Composable (() -> Unit) = {},
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
+            .height(100.dp)
             .padding(all = 0.dp)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(
@@ -57,15 +66,25 @@ private fun MovieCard(
                 model = imgUrl,
                 contentDescription = "Movie $title",
                 modifier = Modifier
-                    .width(90.dp)
+                    .width(80.dp)
                     .fillMaxHeight(),
                 alignment = Alignment.TopStart
             )
-            Column {
-                Text(text = title, style = MaterialTheme.typography.headlineMedium)
-                Text(text = year.toString())
+            Column(modifier = Modifier.width(250.dp)) {
+                Text(text = title, style = MaterialTheme.typography.headlineSmall)
+                Text(text = year)
             }
-            content()
+
+
+            Column(
+                modifier = Modifier
+                    .width(20.dp)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                content()
+            }
         }
     }
 }
